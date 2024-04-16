@@ -1,0 +1,304 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pr="http://primefaces.org/rain"
+                template="/WEB-INF/template.xhtml"
+                xmlns:webjars="http://webjars.org/ui"
+                webjars:assetLocator="org.webjars.WebJarAssetLocator"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <style>
+        body {
+            font-family: Arial;
+            text-transform: capitalize;
+        }
+
+        .progress {
+            position: absolute;
+            top: 15vh;
+            width: 0%;
+            height: 10px;
+            background-color: #2183dd;
+            transition: width 0.2s;
+        }
+        .progress.progress--1 {
+            width: calc(20%);
+        }
+        .progress.progress--2 {
+            width: calc(40%);
+        }
+        .progress.progress--3 {
+            width: calc(60%);
+        }
+        .progress.progress--4 {
+            width: calc(80%);
+        }
+        .progress.progress--5 {
+            width: calc(100%);
+        }
+        .progress.progress--complete {
+            width: 100vw;
+        }
+
+        .progress__bg {
+            position: absolute;
+            width: 100vw;
+            height: 10px;
+            background-color: #e5e5e5;
+            z-index: -1;
+        }
+
+        .progress__step {
+            position: absolute;
+            top: -8px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .progress__step.progress__step--1 {
+            left: calc(20vw - 9px);
+        }
+        .progress__step.progress__step--2 {
+            left: calc(40vw - 9px);
+        }
+        .progress__step.progress__step--3 {
+            left: calc(60vw - 9px);
+        }
+        .progress__step.progress__step--4 {
+            left: calc(80vw - 9px);
+        }
+        .progress__step.progress__step--5 {
+            left: calc(100vw - 9px);
+        }
+        .progress__step.progress__step--active {
+            color: #2183dd;
+            font-weight: 600;
+        }
+        .progress__step.progress__step--complete .progress__indicator {
+            background-color: #009900;
+            border-color: #2183dd;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .progress__step.progress__step--complete .progress__indicator .fa {
+            display: block;
+        }
+        .progress__step.progress__step--complete .progress__label {
+            font-weight: 600;
+            color: #009900;
+        }
+
+        .progress__indicator {
+            width: 25px;
+            height: 25px;
+            border: 2px solid #808080;
+            border-radius: 50%;
+            background-color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .progress__indicator .fa {
+            display: none;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .progress__label {
+            position: absolute;
+            top: 40px;
+        }
+
+        .progress__actions {
+            position: absolute;
+            top: 75px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            width: max-content;
+        }
+
+        .btn {
+            width: fit-content;
+            padding: 5px 8px;
+            background-color: #ffffff;
+            border: 1px solid #808080;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .btn:nth-child(2) {
+            margin: 0 10px;
+        }
+    </style>
+
+    <ui:define name="head">
+        <h:outputStylesheet  library="demo"  name="css/flags/flags.css"/>
+    </ui:define>
+
+    <ui:define name="title">Gestión Asociados</ui:define>
+
+    <ui:define name="viewname">
+        <li>INICIO</li>
+        <li><i class="pi pi-chevron-right"></i></li>
+        <li>
+            <p:link outcome="/table">GESTION DE ASOCIADOS</p:link>
+        </li>
+    </ui:define>
+    <ui:define name="content">
+        <h2 style="color: white">GESTION DE ASOCIADOS</h2>
+        <br></br><br></br>
+        <h:form>
+            <div class="grid table-demo">
+                <div class="card col-12">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{t.displayName}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:separator />
+                        <h:outputText value="#{selectOneMenuView.themes.size()} themes" style="font-weight:bold;"/>
+                    </f:facet>
+                    <!--Este TabView filtra las especialidades de nuestra tabla de asociados -->
+                    <div>
+
+                    </div>
+
+                    <!-- TABLA DE DATOS - CRUD (CREATE, READ, UPDATE & DELETE-->
+                    <div>
+                        <p:dataTable id="tablaUsuario" widgetVar="dtOcurrencias"  reflow="true" value="#{VistaRolesApp.listaMenus}" var="menu" rows="5" paginator="true" paginatorPosition="bottom">
+
+                            <f:facet  name="header" >
+                                <div  class="products-table-header"  style="display: flex; justify-content: space-between; align-items: center;" >
+                                    <span style="font-weight: bold;  ">  Asociado Registrado  </span>
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtOcurrencias').filter()" placeholder="Buscar" style="width: 400px ">
+                                    </p:inputText>
+                                </div>
+                            </f:facet>
+
+                            <!--COLUMNA CODIGO ASOCIADOS-->
+                            <p:column headerText="Codigo Asociado" style="text-align: center;" >
+                                <h:outputText value="#{menu.numDocIdent_asociadol}" />
+                            </p:column>
+
+                            <!--COLUMNA DNI / RUC-->
+                            <p:column headerText="DNI/RUC" style="text-align: center;" sortBy="#{menu.numDocIdent_asociado}"  filterBy="#{menu.numDocIdent_asociado}" >
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{menu.numDocIdent_asociado}" />
+                                    </f:facet>
+
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{menu.numDocIdent_asociado}"  style="width:100%" label="Nombre"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <!--COLUMNA NOMBRES-->
+                            <p:column headerText="Nombres" style="text-align: center;" sortBy="#{menu.nombres}"  filterBy="#{menu.nombres}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{menu.nombres}" />
+                                    </f:facet>
+
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{menu.nombres}"  style="width:100%" label="Nombre"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <!--COLUMNA CATEGORIA REGISTRO-->
+                            <p:column headerText="Categoria De Registro" style="text-align: center;" sortBy="#{menu.descripcion_rol}"  filterBy="#{menu.descripcion_rol}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{menu.descripcion_rol}" />
+                                    </f:facet>
+                                    <div class="field col-12 md:col-4">
+                                        <p:selectOneMenu id="labeled" value="#{selectOneMenuView.labeled}" label="Always Display Label"
+                                                         alwaysDisplayLabel="true">
+                                            <f:selectItems value="#{selectOneMenuView.cities}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{menu.descripcion_rol}"  style="width:100%" label="Nombre"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+
+                            <!--COLUMNA FECHA DE REGISTROS-->
+                            <p:column headerText="Fecha de Registro" style="text-align: center;" sortBy="#{menu.fechaRegistro}"  filterBy="#{menu.fechaRegistro}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{menu.fechaRegistro}" />
+                                    </f:facet>
+
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{menu.fechaRegistro}"  style="width:100%" label="Nombre"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <!--COLUMNA ESTADO DE ACTIVACIÓN-->
+                            <p:column headerText="Estado de Activación" style="text-align: center;" sortBy="#{menu.estadoActividad}"  filterBy="#{menu.estadoActividad}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{menu.estadoActividad}" />
+                                    </f:facet>
+
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{menu.estadoActividad}"  style="width:100%" label="Nombre"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column headerText="Gestión" exportable="false">
+
+                                <!-- BOTÓN PARA EDITAR FILAS INDIVIDUALMENTE -->
+                                <p:commandButton icon="pi pi-pencil" 
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this" >
+                                    <f:setPropertyActionListener value="#{dashboard}" target="#{ocurrenciaManagedBean.selectedOcurrencia}" />
+                                </p:commandButton>
+
+                                <!-- BOTÓN PARA MOSTRAR TODOS LOS DATOS DE LOS POSTULANTES-->
+                                <p:commandButton id="showDetailsButton" icon="pi pi-eye" styleClass="edit-button rounded-button ui-button-warning" onclick="abrirDialogo();" />
+
+
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <script type="text/javascript">
+                            function abrirDialogo() {
+                                // Abre una ventana emergente con una URL específica
+                                window.open('datosCompletosAsociados.xhtml', '_blank', 'width=600,height=800');
+                            }
+                        </script>
+                        <!--VENTANA EMERGENTE PARA MOSTRAR TODOS LOS DATOS DE LOS POSTULANTES-->
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
