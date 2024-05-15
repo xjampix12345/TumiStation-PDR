@@ -207,7 +207,7 @@ a {
 .layout-content {
   padding: 30px 36px;
   flex: 1 1 auto;
-  background-color: #2A2A2A;
+  background-color: #fff;
 }
 
 @media (max-width: 991px) {
@@ -2906,6 +2906,7 @@ a {
   justify-content: space-between;
   overflow-x: auto;
   overflow-y: hidden;
+  background-color: #fff
 }
 .layout-breadcrumb .breadcrumb {
   display: -ms-flexbox;
@@ -2987,6 +2988,7 @@ a {
 .layout-footer {
   padding: 16px 120px;
   border-top: solid 1px #ebedef;
+  background-color: #fff
 }
 .layout-footer span {
   font-size: 12px;

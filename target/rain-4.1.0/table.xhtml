@@ -150,7 +150,7 @@
         </li>
     </ui:define>
     <ui:define name="content">
-        <h2 style="color: white">GESTION DE ASOCIADOS</h2>
+        <h2 style="color: #2f9e8d">GESTION DE ASOCIADOS</h2>
         <br></br><br></br>
         <h:form>
             <div class="grid table-demo">
@@ -167,10 +167,11 @@
                     </f:facet>
                     <!--Este TabView filtra las especialidades de nuestra tabla de asociados -->
                     <div>
-
                     </div>
 
-                    <!-- TABLA DE DATOS - CRUD (CREATE, READ, UPDATE & DELETE-->
+                    <!--SPAM-->
+                    <!--TABLA DE DATOS - CRUD (CREATE, READ, UPDATE & DELETE-->
+                    <!--SPAM-->
                     <div>
                         <p:dataTable id="tablaUsuario" widgetVar="dtOcurrencias"  reflow="true" value="#{VistaRolesApp.listaMenus}" var="menu" rows="5" paginator="true" paginatorPosition="bottom">
 
@@ -182,14 +183,23 @@
                                 </div>
                             </f:facet>
 
+                            <!--SPAM-->
                             <!--COLUMNA CODIGO ASOCIADOS-->
                             <p:column headerText="Codigo Asociado" style="text-align: center;" >
                                 <h:outputText value="#{menu.numDocIdent_asociadol}" />
                             </p:column>
 
+                            <!--SPAM-->
                             <!--COLUMNA DNI / RUC-->
-                            <p:column headerText="DNI/RUC" style="text-align: center;" sortBy="#{menu.numDocIdent_asociado}"  filterBy="#{menu.numDocIdent_asociado}" >
+                            <p:column headerText="DNI/RUC" style="text-align: center;" sortBy="#{menu.numDocIdent_asociado}"  filterBy="#{menu.numDocIdent_asociado}" 
+                                      filterMatchMode="exact">
                                 <p:cellEditor>
+                                    <f:facet name="filter">
+                                        <p:selectOneMenu onchange="PF('customersTable').filter()" styleClass="ui-custom-filter">
+                                            <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItems value="#{dtFilterView.representatives}" />
+                                        </p:selectOneMenu>
+                                    </f:facet>
                                     <f:facet name="output">
                                         <h:outputText value="#{menu.numDocIdent_asociado}" />
                                     </f:facet>
@@ -200,6 +210,7 @@
                                 </p:cellEditor>
                             </p:column>
 
+                            <!--SPAM-->
                             <!--COLUMNA NOMBRES-->
                             <p:column headerText="Nombres" style="text-align: center;" sortBy="#{menu.nombres}"  filterBy="#{menu.nombres}">
                                 <p:cellEditor>
@@ -213,6 +224,7 @@
                                 </p:cellEditor>
                             </p:column>
 
+                            <!--SPAM-->
                             <!--COLUMNA CATEGORIA REGISTRO-->
                             <p:column headerText="Categoria De Registro" style="text-align: center;" sortBy="#{menu.descripcion_rol}"  filterBy="#{menu.descripcion_rol}">
                                 <p:cellEditor>
@@ -232,8 +244,7 @@
                                 </p:cellEditor>
                             </p:column>
 
-
-
+                            <!--SPAM-->
                             <!--COLUMNA FECHA DE REGISTROS-->
                             <p:column headerText="Fecha de Registro" style="text-align: center;" sortBy="#{menu.fechaRegistro}"  filterBy="#{menu.fechaRegistro}">
                                 <p:cellEditor>
@@ -247,6 +258,7 @@
                                 </p:cellEditor>
                             </p:column>
 
+                            <!--SPAM-->
                             <!--COLUMNA ESTADO DE ACTIVACIÓN-->
                             <p:column headerText="Estado de Activación" style="text-align: center;" sortBy="#{menu.estadoActividad}"  filterBy="#{menu.estadoActividad}">
                                 <p:cellEditor>
@@ -260,15 +272,18 @@
                                 </p:cellEditor>
                             </p:column>
 
-
+                            <!--SPAM-->
+                            <!--COLUMNA ESTADO CONFIGURACIONES-->
                             <p:column headerText="Gestión" exportable="false">
 
+
                                 <!-- BOTÓN PARA EDITAR FILAS INDIVIDUALMENTE -->
+                                <!--
                                 <p:commandButton icon="pi pi-pencil" 
                                                  styleClass="edit-button rounded-button ui-button-success" process="@this" >
                                     <f:setPropertyActionListener value="#{dashboard}" target="#{ocurrenciaManagedBean.selectedOcurrencia}" />
                                 </p:commandButton>
-
+                                -->
                                 <!-- BOTÓN PARA MOSTRAR TODOS LOS DATOS DE LOS POSTULANTES-->
                                 <p:commandButton id="showDetailsButton" icon="pi pi-eye" styleClass="edit-button rounded-button ui-button-warning" onclick="abrirDialogo();" />
 
