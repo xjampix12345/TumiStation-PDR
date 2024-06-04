@@ -146,11 +146,11 @@
         <li>INICIO</li>
         <li><i class="pi pi-chevron-right"></i></li>
         <li>
-            <p:link outcome="/table">GESTION DE ASOCIADOS</p:link>
+            <p:link outcome="/table">ACTIVACIÓN DE ASOCIADOS</p:link>
         </li>
     </ui:define>
     <ui:define name="content">
-        <h2 style="color: #2f9e8d">GESTION DE ASOCIADOS</h2>
+        <h2 style="color: #2f9e8d">ACTIVACIÓN DE ASOCIADOS</h2>
         <br></br><br></br>
         <h:form>
             <div class="grid table-demo">
@@ -284,6 +284,7 @@
                                     <f:setPropertyActionListener value="#{dashboard}" target="#{ocurrenciaManagedBean.selectedOcurrencia}" />
                                 </p:commandButton>
                                 -->
+                                
                                 <!-- BOTÓN PARA MOSTRAR TODOS LOS DATOS DE LOS POSTULANTES-->
                                 <p:commandButton id="showDetailsButton" icon="pi pi-eye" styleClass="edit-button rounded-button ui-button-warning" onclick="abrirDialogo();" />
 

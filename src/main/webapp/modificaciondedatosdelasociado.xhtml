@@ -143,14 +143,14 @@
     <ui:define name="title">Gestión Asociados</ui:define>
 
     <ui:define name="viewname">
-        <li>INICIO</li>
+        <li outcome="dashboard">INICIO</li>
         <li><i class="pi pi-chevron-right"></i></li>
         <li>
-            <p:link outcome="/table">ACTIVACIÓN DE ASOCIADOS</p:link>
+            <p:link outcome="/table">MODIFICACIÓN DE DATOS DEL ASOCIADO</p:link>
         </li>
     </ui:define>
     <ui:define name="content">
-        <h2 style="color: #2f9e8d">ACTIVACIÓN DE ASOCIADOS</h2>
+        <h2 style="color: #2f9e8d">MODIFICACIÓN DE DATOS DEL ASOCIADO</h2>
         <br></br><br></br>
         <h:form>
             <div class="grid table-demo">
@@ -172,12 +172,13 @@
                     <!--SPAM-->
                     <!--TABLA DE DATOS - CRUD (CREATE, READ, UPDATE & DELETE-->
                     <!--SPAM-->
+
                     <div>
                         <p:dataTable id="tablaUsuario" widgetVar="dtOcurrencias"  reflow="true" value="#{VistaRolesApp.listaMenus}" var="menu" rows="5" paginator="true" paginatorPosition="bottom">
-
+                            <button onclick="actualizarPagina()">Actualizar</button>
                             <f:facet  name="header" >
                                 <div  class="products-table-header"  style="display: flex; justify-content: space-between; align-items: center;" >
-                                    <span style="font-weight: bold;  ">  Asociado Registrado  </span>
+                                    <span style="font-weight: bold;  ">Actualizar Registro: <p:commandButton icon="pi pi-refresh" onclick="actualizarPagina()" /></span>
                                     <p:inputText id="globalFilter" onkeyup="PF('dtOcurrencias').filter()" placeholder="Buscar" style="width: 400px ">
                                     </p:inputText>
                                 </div>
@@ -187,19 +188,22 @@
                             <!--COLUMNA CODIGO ASOCIADOS-->
                             <p:column headerText="Codigo Asociado" style="text-align: center;" >
                                 <h:outputText value="#{menu.numDocIdent_asociadol}" />
+                                <f:facet name="filtrar">
+                                    <p:inputText id="globalFilter2" onkeyup="PF('dtOcurrencias').filter()" placeholder="Buscar" style="width: 400px "></p:inputText>
+                                </f:facet>
                             </p:column>
 
                             <!--SPAM-->
                             <!--COLUMNA DNI / RUC-->
                             <p:column headerText="DNI/RUC" style="text-align: center;" sortBy="#{menu.numDocIdent_asociado}"  filterBy="#{menu.numDocIdent_asociado}" 
                                       filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu id="categoryFilter1" onchange="filterCategories()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{dtFilterView.categories}" var="category" itemLabel="#{category}" itemValue="#{category}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
                                 <p:cellEditor>
-                                    <f:facet name="filter">
-                                        <p:selectOneMenu onchange="PF('customersTable').filter()" styleClass="ui-custom-filter">
-                                            <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
-                                            <f:selectItems value="#{dtFilterView.representatives}" />
-                                        </p:selectOneMenu>
-                                    </f:facet>
                                     <f:facet name="output">
                                         <h:outputText value="#{menu.numDocIdent_asociado}" />
                                     </f:facet>
@@ -226,23 +230,26 @@
 
                             <!--SPAM-->
                             <!--COLUMNA CATEGORIA REGISTRO-->
-                            <p:column headerText="Categoria De Registro" style="text-align: center;" sortBy="#{menu.descripcion_rol}"  filterBy="#{menu.descripcion_rol}">
+                            <p:column headerText="Categoria De Registro" style="text-align: center;" sortBy="#{menu.descripcion_rol}" filterBy="#{menu.descripcion_rol}">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu id="categoryFilter2" onchange="filterCategories()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{dtFilterView.categories}" var="category" itemLabel="#{category}" itemValue="#{category}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{menu.descripcion_rol}" />
                                     </f:facet>
                                     <div class="field col-12 md:col-4">
-                                        <p:selectOneMenu id="labeled" value="#{selectOneMenuView.labeled}" label="Always Display Label"
-                                                         alwaysDisplayLabel="true">
-                                            <f:selectItems value="#{selectOneMenuView.cities}"/>
-                                        </p:selectOneMenu>
                                     </div>
-
                                     <f:facet name="input">
-                                        <p:inputText  value="#{menu.descripcion_rol}"  style="width:100%" label="Nombre"/>
+                                        <p:inputText value="#{menu.descripcion_rol}" style="width:100%" label="Nombre"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
+
 
                             <!--SPAM-->
                             <!--COLUMNA FECHA DE REGISTROS-->
@@ -261,6 +268,12 @@
                             <!--SPAM-->
                             <!--COLUMNA ESTADO DE ACTIVACIÓN-->
                             <p:column headerText="Estado de Activación" style="text-align: center;" sortBy="#{menu.estadoActividad}"  filterBy="#{menu.estadoActividad}">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu id="categoryFilter3" onchange="filterCategories()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{dtFilterView.categories}" var="category" itemLabel="#{category}" itemValue="#{category}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{menu.estadoActividad}" />
@@ -276,17 +289,12 @@
                             <!--COLUMNA ESTADO CONFIGURACIONES-->
                             <p:column headerText="Gestión" exportable="false">
 
-
-                                <!-- BOTÓN PARA EDITAR FILAS INDIVIDUALMENTE -->
-                                <!--
-                                <p:commandButton icon="pi pi-pencil" 
-                                                 styleClass="edit-button rounded-button ui-button-success" process="@this" >
-                                    <f:setPropertyActionListener value="#{dashboard}" target="#{ocurrenciaManagedBean.selectedOcurrencia}" />
-                                </p:commandButton>
-                                -->
-                                
                                 <!-- BOTÓN PARA MOSTRAR TODOS LOS DATOS DE LOS POSTULANTES-->
-                                <p:commandButton id="showDetailsButton" icon="pi pi-eye" styleClass="edit-button rounded-button ui-button-warning" onclick="abrirDialogo();" />
+                                <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-product-content"
+                                                 oncomplete="PF('manageProductDialog').show()"
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <p:resetInput target=":dialogs:manage-product-content" />
+                                </p:commandButton>
 
 
                             </p:column>
@@ -310,11 +318,4 @@
         </h:form>
     </ui:define>
 </ui:composition>
-
-
-
-
-
-
-
 
